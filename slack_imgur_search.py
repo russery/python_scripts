@@ -8,7 +8,7 @@
     2) Replace CHANN_NAME with the channel or conversation name that you
     wish to search
     
-    """
+"""
 
 import requests
 import json
@@ -26,18 +26,18 @@ query = ("https://slack.com/api/search.all? " +
 def extract_links(results):
     messages = results['messages']['matches']
         
-        for msg in messages:
-            # extract imgur link from rest of message
-            try:
-                l = re.findall('<' + SEARCH_STR + '>', msg['text'])
-                    links.append(l[0][1:-1])
-                except:
-                    pass
+    for msg in messages:
+        # extract imgur link from rest of message
+        try:
+            l = re.findall('<' + SEARCH_STR + '>', msg['text'])
+            links.append(l[0][1:-1])
+        except:
+            pass
     return links
 
 def make_query(querystr):
     r = requests.get(querystr)
-        return json.loads(r.content)
+    return json.loads(r.content)
 
 
 # get total number of pages
@@ -48,12 +48,11 @@ print "Found", pages, "pages of results"
 
 # TODO check headers and response code (r.status_code, r.headers)
 
-
 # extract list of links from results
 links = []
 for p in range(1,pages):
     r = make_query(query + "&page=" + str(p))
-        links = links + extract_links(r)
+    links = links + extract_links(r)
 
 
 # check for duplicate images
